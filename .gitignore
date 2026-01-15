@@ -24,7 +24,7 @@ Thumbs.db
 .vscode/
 
 # Output images
-images/output/
+public/images/output/
 
 # Misc
 *.swp
@@ -45,3 +45,5 @@ coverage/
 *.tgz
 *.gz
 *.zip
+.vercel
+.env*.local
