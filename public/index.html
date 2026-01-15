@@ -25,16 +25,16 @@
   </div>
   <script>
     // Fetch and display original images on page load
-    async function loadImages(urls, title = 'Original Images') {
+    async function loadImages(urls) {
       const container = document.getElementById('imagesContainer');
-      container.innerHTML = `<h3>${title}</h3>`;
+      container.innerHTML = '';
       if (urls && urls.length) {
         urls.forEach(url => {
           const div = document.createElement('div');
           div.style.marginBottom = '1.5em';
           const img = document.createElement('img');
           img.src = url;
-          img.alt = title;
+          img.alt = '';
           img.style.maxWidth = '100%';
           img.style.display = 'block';
           img.style.marginBottom = '0.5em';
