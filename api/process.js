@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       const canvas = createCanvas(image.width, image.height);
       const ctx = canvas.getContext('2d');
       ctx.drawImage(image, 0, 0);
-      ctx.font = 'bold 32px "Comic Sans MS"';
+      ctx.font = 'bold 64px "Comic Sans MS"';
       ctx.fillStyle = 'white';
       ctx.strokeStyle = 'black';
       ctx.lineWidth = 2;
