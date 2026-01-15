@@ -35,6 +35,25 @@ export default async function handler(req, res) {
 
   const files = fs.readdirSync(originalsDir).filter(f => /\.(jpg|jpeg|png)$/i.test(f));
   const processedFiles = [];
+  // Helper: wrap text to fit width
+  function wrapText(ctx, text, maxWidth) {
+    const words = text.split(' ');
+    let lines = [];
+    let line = '';
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + (line ? ' ' : '') + words[n];
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && line) {
+        lines.push(line);
+        line = words[n];
+      } else {
+        line = testLine;
+      }
+    }
+    if (line) lines.push(line);
+    return lines;
+  }
+
   for (const file of files) {
     try {
       const imgPath = path.join(originalsDir, file);
@@ -49,9 +68,17 @@ export default async function handler(req, res) {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
       const x = image.width / 2;
-      const y = image.height - 20;
-      ctx.strokeText(phrase, x, y);
-      ctx.fillText(phrase, x, y);
+      // Wrap text to fit 90% of image width
+      const maxWidth = image.width * 0.9;
+      const lines = wrapText(ctx, phrase, maxWidth);
+      const lineHeight = 64 + 10; // font size + spacing
+      // Start drawing so last line is 20px from bottom
+      let y = image.height - 20 - (lines.length - 1) * lineHeight;
+      for (const line of lines) {
+        ctx.strokeText(line, x, y);
+        ctx.fillText(line, x, y);
+        y += lineHeight;
+      }
       // Write to /tmp, then read as base64
       const outPath = path.join(outputDir, file);
       const out = fs.createWriteStream(outPath);
