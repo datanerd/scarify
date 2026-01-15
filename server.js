@@ -6,21 +6,21 @@ import path from 'path';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const originalsDir = path.join(process.cwd(), 'images', 'originals');
-const outputDir = path.join(process.cwd(), 'images', 'output');
+const originalsDir = path.join(process.cwd(), 'public', 'images', 'originals');
+const outputDir = path.join(process.cwd(), 'public', 'images', 'output');
 
 // Register Comic Sans Bold font (make sure ComicSansMSBold.ttf is in your project root)
 registerFont(path.join(process.cwd(), 'ComicSansMSBold.ttf'), { family: 'Comic Sans MS', weight: 'bold' });
 
 // Serve list of original images as JSON
-app.get('/originals', (req, res) => {
+app.get('/images/originals', (req, res) => {
   const files = fs.readdirSync(originalsDir).filter(f => /\.(jpg|jpeg|png)$/i.test(f));
-  const urls = files.map(f => `/originals/${encodeURIComponent(f)}`);
+  const urls = files.map(f => `/images/originals/${encodeURIComponent(f)}`);
   res.json({ images: urls });
 });
 
 // Serve original images statically
-app.use('/originals', express.static(originalsDir));
+app.use('/images/originals', express.static(originalsDir));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -83,7 +83,7 @@ app.post('/process', async (req, res) => {
     }
 
     // Respond with URLs to processed images
-    const urls = processedFiles.map(f => `/output/${encodeURIComponent(f)}`);
+    const urls = processedFiles.map(f => `/images/output/${encodeURIComponent(f)}`);
     res.json({ images: urls });
   } catch (err) {
     console.error('Error in /process route:', err);
@@ -91,7 +91,7 @@ app.post('/process', async (req, res) => {
   }
 });
 
-app.use('/output', express.static(outputDir));
+app.use('/images/output', express.static(outputDir));
 
 
 
