@@ -27,7 +27,14 @@ export default async function handler(req, res) {
   // Clean output dir
   if (fs.existsSync(outputDir)) {
     fs.readdirSync(outputDir).forEach(f => {
-      fs.rmSync(path.join(outputDir, f));
+      const filePath = path.join(outputDir, f);
+      try {
+        if (fs.statSync(filePath).isFile()) {
+          fs.rmSync(filePath);
+        }
+      } catch (err) {
+        // Ignore errors for directories or special files
+      }
     });
   } else {
     fs.mkdirSync(outputDir, { recursive: true });
