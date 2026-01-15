@@ -15,11 +15,11 @@
 </head>
 <body>
   <div class="container">
-    <h2>Add Phrase to Images</h2>
+    <h2>Need inspiration?</h2>
     <form id="phraseForm">
-      <label for="phrase">Enter a phrase to add to all images:</label>
+      <!-- label removed -->
       <input type="text" id="phrase" name="phrase" required maxlength="100">
-      <button type="submit">Process Images</button>
+      <button type="submit">Inspire me!</button>
     </form>
     <div id="imagesContainer"></div>
   </div>
@@ -52,16 +52,7 @@
       }
     }
 
-    async function loadOriginals() {
-      const res = await fetch('/api/images/originals');
-      if (res.ok) {
-        const data = await res.json();
-        loadImages(data.images, 'Original Images');
-      } else {
-        loadImages([], 'Original Images');
-      }
-    }
-    loadOriginals();
+    // Removed loading of original images on page load
 
     document.getElementById('phraseForm').onsubmit = async function(e) {
       e.preventDefault();
@@ -83,7 +74,7 @@
         alert('Error processing images.');
       }
       btn.disabled = false;
-      btn.textContent = 'Process Images';
+      btn.textContent = 'Inspire me!';
     };
   </script>
 </body>
