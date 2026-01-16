@@ -6,9 +6,18 @@
   <title>Scarify - Add Phrase to Images</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 2em; background: #f7f7f7; }
-    .container { background: #fff; padding: 2em; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 2px 8px #0001; }
+    .container { background: #fff; padding: 2em; border-radius: 8px; max-width: 500px; margin: auto; box-shadow: 0 2px 8px #0001; }
     label, input, button { display: block; width: 100%; margin-bottom: 1em; }
-    button { background: #007bff; color: #fff; border: none; padding: 0.75em; border-radius: 4px; cursor: pointer; font-size: 1em; }
+    h2 { font-size: 2.2em; }
+    input[type="text"] {
+      font-size: 1.3em;
+      padding: 0.8em;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    button { background: #007bff; color: #fff; border: none; padding: 1em; border-radius: 4px; cursor: pointer; font-size: 1.2em; }
     button:hover { background: #0056b3; }
     .download-link { margin-top: 1em; display: block; }
     .share-icons {
@@ -49,13 +58,28 @@
           // Social share icons
           const shareContainer = document.createElement('div');
           shareContainer.className = 'share-icons';
-          // WhatsApp only
+          // WhatsApp icon
           const wa = document.createElement('a');
           wa.href = `https://wa.me/?text=${encodeURIComponent(url)}`;
           wa.target = '_blank';
           wa.title = 'Share on WhatsApp';
           wa.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp" style="width:28px;height:28px;">';
           shareContainer.appendChild(wa);
+          // Download icon
+          const dl = document.createElement('a');
+          dl.href = url;
+          // Get the phrase from the input, replace spaces with underscores, remove special characters
+          let phrase = document.getElementById('phrase')?.value || '';
+          let cleanName = phrase
+            .replace(/[^a-zA-Z0-9\s]/g, '') // remove special chars
+            .replace(/\s+/g, '_')           // spaces to underscores
+            .replace(/^_+|_+$/g, '');        // trim underscores
+          if (!cleanName) cleanName = 'image';
+          // Force file extension to .jpeg
+          dl.download = cleanName + '.jpeg';
+          dl.title = 'Download image';
+          dl.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/arrow-down-tray.svg" alt="Download" style="width:28px;height:28px;">';
+          shareContainer.appendChild(dl);
           div.appendChild(shareContainer);
           container.appendChild(div);
         });
