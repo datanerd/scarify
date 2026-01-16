@@ -58,11 +58,9 @@
           // Social share icons
           const shareContainer = document.createElement('div');
           shareContainer.className = 'share-icons';
-          // WhatsApp icon (share public URL)
+          // WhatsApp icon
           const wa = document.createElement('a');
-          // Use absolute URL for WhatsApp sharing
-          const absUrl = window.location.origin + url;
-          wa.href = `https://wa.me/?text=${encodeURIComponent(absUrl)}`;
+          wa.href = `https://wa.me/?text=${encodeURIComponent(url)}`;
           wa.target = '_blank';
           wa.title = 'Share on WhatsApp';
           wa.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp" style="width:28px;height:28px;">';
