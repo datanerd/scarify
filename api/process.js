@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 const originalsDir = path.join(process.cwd(), 'public', 'images', 'originals');
-const outputDir = '/tmp'; // Use /tmp for Vercel compatibility
+const outputDir = path.join(process.cwd(), 'public', 'images', 'output');
 
 // Register Comic Sans Bold font (make sure ComicSansMSBold.ttf is in your project root)
 try {
@@ -86,7 +86,7 @@ export default async function handler(req, res) {
         ctx.fillText(line, x, y);
         y += lineHeight;
       }
-      // Write to /tmp, then read as base64
+      // Write to public/images/output, then return public URL
       const outPath = path.join(outputDir, file);
       const out = fs.createWriteStream(outPath);
       const stream = canvas.createJPEGStream();
@@ -95,10 +95,9 @@ export default async function handler(req, res) {
         out.on('finish', resolve);
         out.on('error', reject);
       });
-      // Read file as base64 and return as data URL
-      const imgBuffer = fs.readFileSync(outPath);
-      const dataUrl = `data:image/jpeg;base64,${imgBuffer.toString('base64')}`;
-      processedFiles.push(dataUrl);
+      // Return public URL for the image
+      const publicUrl = `/images/output/${file}`;
+      processedFiles.push(publicUrl);
     } catch (err) {
       // Skip file on error
     }
