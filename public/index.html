@@ -11,6 +11,13 @@
     button { background: #007bff; color: #fff; border: none; padding: 0.75em; border-radius: 4px; cursor: pointer; font-size: 1em; }
     button:hover { background: #0056b3; }
     .download-link { margin-top: 1em; display: block; }
+    .share-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75em;
+      margin-top: 0.5em;
+    }
   </style>
 </head>
 <body>
@@ -38,13 +45,39 @@
           img.style.maxWidth = '100%';
           img.style.display = 'block';
           img.style.marginBottom = '0.5em';
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = url.split('/').pop();
-          a.textContent = 'Download';
-          a.className = 'download-link';
           div.appendChild(img);
-          div.appendChild(a);
+          // Social share icons
+          const shareContainer = document.createElement('div');
+          shareContainer.className = 'share-icons';
+          // WhatsApp
+          const wa = document.createElement('a');
+          wa.href = `https://wa.me/?text=${encodeURIComponent(url)}`;
+          wa.target = '_blank';
+          wa.title = 'Share on WhatsApp';
+          wa.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp" style="width:28px;height:28px;">';
+          shareContainer.appendChild(wa);
+          // LinkedIn
+          const li = document.createElement('a');
+          li.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+          li.target = '_blank';
+          li.title = 'Share on LinkedIn';
+          li.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn" style="width:28px;height:28px;">';
+          shareContainer.appendChild(li);
+          // Facebook
+          const fb = document.createElement('a');
+          fb.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+          fb.target = '_blank';
+          fb.title = 'Share on Facebook';
+          fb.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook" style="width:28px;height:28px;">';
+          shareContainer.appendChild(fb);
+          // KakaoTalk
+          const kakao = document.createElement('a');
+          kakao.href = `https://sharer.kakao.com/talk/friends/picker/link?url=${encodeURIComponent(url)}`;
+          kakao.target = '_blank';
+          kakao.title = 'Share on KakaoTalk';
+          kakao.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/kakaotalk.svg" alt="KakaoTalk" style="width:28px;height:28px;">';
+          shareContainer.appendChild(kakao);
+          div.appendChild(shareContainer);
           container.appendChild(div);
         });
       } else {
