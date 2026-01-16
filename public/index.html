@@ -49,34 +49,13 @@
           // Social share icons
           const shareContainer = document.createElement('div');
           shareContainer.className = 'share-icons';
-          // WhatsApp
+          // WhatsApp only
           const wa = document.createElement('a');
           wa.href = `https://wa.me/?text=${encodeURIComponent(url)}`;
           wa.target = '_blank';
           wa.title = 'Share on WhatsApp';
           wa.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp" style="width:28px;height:28px;">';
           shareContainer.appendChild(wa);
-          // LinkedIn
-          const li = document.createElement('a');
-          li.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-          li.target = '_blank';
-          li.title = 'Share on LinkedIn';
-          li.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn" style="width:28px;height:28px;">';
-          shareContainer.appendChild(li);
-          // Facebook
-          const fb = document.createElement('a');
-          fb.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-          fb.target = '_blank';
-          fb.title = 'Share on Facebook';
-          fb.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook" style="width:28px;height:28px;">';
-          shareContainer.appendChild(fb);
-          // KakaoTalk
-          const kakao = document.createElement('a');
-          kakao.href = `https://sharer.kakao.com/talk/friends/picker/link?url=${encodeURIComponent(url)}`;
-          kakao.target = '_blank';
-          kakao.title = 'Share on KakaoTalk';
-          kakao.innerHTML = '<img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/kakaotalk.svg" alt="KakaoTalk" style="width:28px;height:28px;">';
-          shareContainer.appendChild(kakao);
           div.appendChild(shareContainer);
           container.appendChild(div);
         });
